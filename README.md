@@ -42,4 +42,4 @@ A simple bot for automating playing on stockmarket in The Tangerine Tycoon flash
 // - Bot can work properly only when the "Price" and the "Buy/Sell" columns of the
 //   Exchange screen are visible
 // - If bot strangely "jerks" the mouse cursor way too often, ensure
-//   that the "Purchase Volume" on the Exchange screen is set to 50% (NOT 100%)  
+//   that the "Purchase Volume" on the Exchange screen is set to 50% (NOT 100%)
