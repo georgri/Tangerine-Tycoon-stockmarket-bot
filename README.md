@@ -1,5 +1,5 @@
 # Tangerine-Tycoon-stockmarket-bot
-A simple bot for easier trading in the Tangerine Tycoon stock market minigame.
+A simple bot for automated trading in The Tangerine Tycoon stock market minigame.
 
 Requirements
 =================
@@ -13,7 +13,7 @@ The bot is only tested to work properly
 Instruction
 ===============
 0. Download and install SCAR Divi 3.40 (download: http://www.scar-divi.com/download.php?file=scar-3.40.00-setup.exe)
-0. Open this script in SCAR
+0. Open this script (tangerine_tycoon.scar) in SCAR
 0. Open the Tangerine Tycoon in Firefox browser (Chrome will not work) (kongregate: http://www.kongregate.com/games/GazThomas/tangerine-tycoon)
 0. Page scale should be 100%, set it properly by ctrl + mouse wheel!
 0. You should have at least 50 tangerines! Earn them right now if you don't!
