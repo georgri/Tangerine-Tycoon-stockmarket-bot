@@ -1,0 +1,120 @@
+// A bot for easier trading in the Tangerine Tycoon stock market
+// minigame.
+
+// The bot is only tested to work properly 
+//   for the Tangerine Tycoon v1.26 
+//   in Mozilla Firefox (not compatible with Chrome) 
+//   with page scale set to 100% (not compatible with other scales)
+//   with flash player quality set to "high" (not compatible with other quality settings)
+//   under Windows 7 (wherever SCAR Divi 3.40 is working) 
+
+// Instruction:
+// 1) Download and install SCAR Divi 3.40 
+//    (download: http://www.scar-divi.com/download.php?file=scar-3.40.00-setup.exe)
+// 2) Open this script in SCAR
+// 3) Open the Tangerine Tycoon in Firefox browser (Chrome will not work)
+//    (kongregate: http://www.kongregate.com/games/GazThomas/tangerine-tycoon)
+// 3.1) Page scale should be 100%, set it properly by ctrl + mouse wheel!
+// 3.2) You should have at least 50 tangerines! Earn them right now if you don't!
+// 4) Go to The Tangerine Exchange screen (press right arrow on the main screen)
+// 4.1) Click "Purchase Volume: 50%" in the lower right corner of the game screen
+// 5) Target the flash game subscreen with SCAR, dragging the "Crosshair" icon
+//    onto the game flash screen in the browser window
+// 5.1) Whenever you move the browser window, you should re-target the game screen
+//      with the "Crosshare" tool in SCAR
+// 6) Launch the bot ("Play" button in SCAR). 
+// 6.1) WARNING! The bot will stop working if the "Price" column is blocked by
+//      achievement panels. Watch them from time to time and close them manually!
+// 6.2) You can play the game as usual, but bot will act only when The Tangerine
+//      Exchange screen is opened.
+// 6.3) You can work with other programs as well, the bot will act whenever
+//      the game screen is visible. 
+// 7) Whenever you feel to stop the bot playing, press "Stop" in SCAR.
+
+// Troubleshooting:
+// - If the bot stopped working, try to re-target the game window, dragging
+//   the "Crosshair" tool from SCAR toolpanel to the flash screen of the game.
+// - Please, ensure the page scale is set to 100%. The bot will not recognise
+//   the fonts of the game otherwise.
+// - Bot can work properly only when the "Price" and the "Buy/Sell" columns of the
+//   Exchange screen are visible
+// - If bot strangely "jerks" the mouse cursor way too often, ensure
+//   that the "Purchase Volume" on the Exchange screen is set to 50% (NOT 100%)  
+
+program TangerineStockBot; 
+var 
+  buyBmp, sellBmp, twoBmp, eightBmp: TSCARBitmap; 
+   
+// Initialize bitmaps for searching
+procedure LoadBitmaps; begin
+  buyBmp := TSCARBitmap.Create('deNrjYOBk+A8GG7dfTclfc+7SUwi3a/IBZPF5S' +
+    '09DuK/ffkEWz63Y+B8VQMSB6MjJ+1jF4SZDuEBU3rgNKAtEaOJwlUAANA1T/fJ' +
+    '1F+CCmAgAMZegNQ==');          
+  sellBmp := TSCARBitmap.Create('deNoTZmBn+A8GN26/QkYp+WuAJESqa/KBjduvQ' +
+    'thABlAKgiAi5Y3bgOzl6y4ApSCyRGp8+OQ9EEHYR07eJ0YjXBBuQm7FRmI0AlF' +
+    'j126gLBBBHDxoEQAI1QtH');      
+  twoBmp := TSCARBitmap.Create('deNpjZeBk+I8Evn77+R8DlDduS8lfA5HauP0qk' +
+    'A1ED5+8B3Ih7CMn70NU5lZsPHfpKYR94/YriBq4LrgVQCkgQrMFAFl9dlg=');
+  eightBmp := TSCARBitmap.Create('deNpjZeBguHH71X8MABSEiz988j4lf01uxUa47' +
+    'JGT93cfuAVkvH775T9eADSkvHHbxu1X4RrhRgEAH6Vr+Q==');            
+end;  
+
+
+procedure tryToTrade; 
+var i: integer;    
+    x, y, a, b: integer;
+begin
+
+  for i := 0 to 4 do begin     
+  
+    // - Search for the strings with the word "Buy"
+    // buyBmp at 705, 120, 724, 134
+    // --, +30, --, +30  
+    if FindBitmapTol(x, y, buyBmp, 705, 120 + i * 30, 724, 134 + i * 30, 10) then begin
+      // -- Find the ones with the '2' in the beginning
+      // oneBmp at 272, 115, 285, 130
+      // --, +30, --, +30    
+      //write('Found buy at'); writeln(i);
+      if FindBitmapTol(a, b, twoBmp, 272, 115 + i * 30, 285, 130 + i * 30, 50) then begin 
+        write('found 1 or 2 at '); writeln(i);
+        // -- Press 'Buy' on them
+        // clickMouse at the found coordinates of "Buy"       
+        ClickMouse(x, y, mbLeft);
+        sleep(50);  
+        SetMousePos(700, 500);
+      end;                    
+    end;    
+    
+    // - Search for the strings with the word "Sell"
+    // sellBmp at 701, 115, 727, 130
+    // --, +30, --, +30  
+    if FindBitmapTol(x, y, sellBmp, 701, 115 + i * 30, 727, 130 + i * 30, 10) then begin  
+      // -- Find the ones with the '8' in the beginning
+      // eightBmp at 252, 115, 266, 130
+      // --, +30, --, +30        
+      //write('Found sell at'); writeln(i);
+      if FindBitmapTol(a, b, eightBmp, 252, 115 + i * 30, 266, 130 + i * 30, 50) then begin
+       write('found 8 or 9 at '); writeln(i);
+        // -- Press 'Sell' on them
+        // clickMouse at the found coordinates of "Sell"                          
+        ClickMouse(x, y, mbLeft);
+        sleep(50);   
+        SetMousePos(700, 500);
+      end;
+    end;
+             
+  end;
+
+end;
+
+
+// "Main" function
+begin
+  LoadBitmaps;
+  
+  while(True) do begin
+    tryToTrade;
+    Sleep(1000);
+  end;
+
+end.
