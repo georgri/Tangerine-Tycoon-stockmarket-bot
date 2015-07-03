@@ -1,6 +1,10 @@
 # Tangerine-Tycoon-stockmarket-bot
 A simple bot for automated trading in The Tangerine Tycoon stock market minigame.
 
+
+TO STOP THE BOT IN CASE OF EMERGENCY: Ctrl+Alt+S
+
+
 Requirements
 =================
 The bot is only tested to work properly 
@@ -9,10 +13,6 @@ The bot is only tested to work properly
 * with page scale set to 100% (not compatible with other scales)
 * with flash player quality set to "high" (not compatible with other quality settings)
 * under Windows 7 (wherever SCAR Divi 3.40 is working) 
-
-
-TO STOP THE BOT IN CASE OF EMERGENCY: Ctrl+Alt+S
-
 
 Instruction
 ===============
