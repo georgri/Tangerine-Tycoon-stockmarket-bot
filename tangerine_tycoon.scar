@@ -112,9 +112,82 @@ begin
 end;
 
 
+
+function tryToTarget: boolean;
+  var
+    wnds, wnds2: THwndArray;  
+    i, j, width: integer;       
+    client, outer: TSCARWindowClient; 
+    proportion: extended;
+begin
+  // Get the Firefox window with activated Tangerine Tycoon tab
+  Wnds := FindWindowsEx(GetDesktopWindow, 'Tangerine Tycoon', '', False, False, True);
+  // Try to get the flash children of the found windows
+  for i := low(wnds) to high(wnds) do begin
+    Wnds2 := FindWindowsEx(wnds[i], '', 'GeckoFPSandboxChildWindow', True, False, True);
+    for j := low(wnds2) to high(wnds2) do begin 
+      client := TSCARWindowClient.Create(Wnds2[j]) 
+      proportion := client.ImageArea.x2 / client.imagearea.y2;
+      // Proportion should be 800/600(100%)
+      if (proportion >= 1.324) and (proportion <= 1.344) then begin
+        width := client.ImageArea.x2; 
+        if (width > 805) or (width < 795) then begin
+          // Focus on outer window, enlarge or shrink the web page 
+          outer := TSCARWindowClient.create(getouterwindow(client.handle));
+          SetClient(outer)       
+          outer.activate;
+          while (width > 805) do begin 
+            // press Ctrl+Minus  
+            writeln('Shrinking the game page'); 
+            sleep(100);
+            vkeydown(17); // CTRL
+            vkeydown(109); // '-'   
+            sleep(10);
+            vkeyup(109);
+            vkeyup(17); 
+            sleep(2000);
+            client.update;
+            sleep(50);
+            width := client.ImageArea.x2;
+          end;
+          while width < 795 do begin
+            // press Ctrl+Plus              
+            writeln('Enlarging the game page'); 
+            sleep(100);
+            vkeydown(17); // CTRL
+            vkeydown(107); // '+'   
+            sleep(10);
+            vkeyup(107);
+            vkeyup(17);     
+            sleep(2000);
+            client.update;
+            sleep(50);
+            width := client.ImageArea.x2;
+          end;    
+          outer.free;
+        end; 
+        
+        SetClient(client);
+        client.activate; 
+        //client.free; // for some strage reason it causes Access violation
+        result := true;  
+        exit; // from function    
+      end;   
+      
+      client.free;
+    end;
+  end;       
+
+end;
+
+
 // "Main" function
 begin
-  LoadBitmaps;
+  LoadBitmaps;   
+  
+  if not tryToTarget then begin
+    Writeln('Unable to target the game automatically, please do it manually!')
+  end;
   
   while(True) do begin
     tryToTrade;
