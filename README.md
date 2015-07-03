@@ -1,8 +1,7 @@
 # Tangerine-Tycoon-stockmarket-bot
 A simple bot for automating playing on stockmarket in The Tangerine Tycoon flash game
 
-// A bot for easier trading in the Tangerine Tycoon stock market
-// minigame.
+// A bot for easier trading in the Tangerine Tycoon stock market minigame.
 
 // The bot is only tested to work properly 
 //   for the Tangerine Tycoon v1.26 
