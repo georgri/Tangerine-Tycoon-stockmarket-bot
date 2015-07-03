@@ -1,14 +1,16 @@
 // A bot for easier trading in the Tangerine Tycoon stock market
 // minigame.
 
+
+// TO STOP THE BOT IN CASE OF EMERGENCY: Ctrl+Alt+S
+
+
 // The bot is only tested to work properly 
 //   for the Tangerine Tycoon v1.26 
 //   in Mozilla Firefox (not compatible with Chrome) 
 //   with page scale set to 100% (not compatible with other scales)
 //   with flash player quality set to "high" (not compatible with other quality settings)
 //   under Windows 7 (wherever SCAR Divi 3.40 is working) 
-
-// TO STOP THE BOT IN CASE OF EMERGENCY: Ctrl+Alt+S
 
 // Instruction:
 // 1) Download and install SCAR Divi 3.40 
