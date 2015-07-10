@@ -5,8 +5,14 @@
 // TO STOP THE BOT IN CASE OF EMERGENCY: Ctrl+Alt+S
 
 
+// General description: The bot buys commodity when it goes below 30 for 50%
+// of the available money and then sells it if it when it goes above 80. 
+// The bot behaviour is not smart nor optimal. Playing manually will benefit you
+// more quickly. The bot is useful when you are away for several hours and your
+// computer is always on.   
+
 // The bot is only tested to work properly 
-//   for the Tangerine Tycoon v1.26 
+//   for The Tangerine Tycoon v1.26 
 //   in Mozilla Firefox (not compatible with Chrome) 
 //   with page scale set to 100% (not compatible with other scales)
 //   with flash player quality set to "high" (not compatible with other quality settings)
@@ -26,13 +32,18 @@
 //    onto the game flash screen in the browser window
 // 5.1) WARNING! Whenever you move the browser window OR scroll the page, 
 //      you should re-target the game screen with the "Crosshare" tool in SCAR
+// 5.2) The game has now got an "autofocus" feature that tries to automatically
+//      target the game screen and resize the page to 100% scale.
 // 6) Launch the bot ("Play" button in SCAR or press Ctrl+Alt+R). 
 // 6.1) WARNING! The bot will stop working if the "Price" column is blocked by
 //      achievement panels. Watch them from time to time and close them manually!
 // 6.2) You can play the game as usual, but bot will act only when The Tangerine
 //      Exchange screen is opened.
-// 6.3) You can work with other programs as well, the bot will act whenever
-//      the game screen is visible. 
+// 6.3) You can use another browser window for browsing while bot is playing. 
+// 6.3) You can work with other programs as well, even blocking the game
+//      screen with other window. The bot will shortly activate the game window 
+//      from time to time to press an appropriate button in the game.
+//      It will appear as if the browser window will "flicker" for a moment.
 // 7) Whenever you feel to stop the bot playing, press "Stop" in SCAR.
 
 // Troubleshooting:
@@ -44,6 +55,24 @@
 //   Exchange screen are visible
 // - If bot strangely "jerks" the mouse cursor way too often, ensure
 //   that the "Purchase Volume" on the Exchange screen is set to 50% (NOT 100%)  
+
+
+// TODOS:
+// TODO: Tutorial with pictures
+// TODO: Add mode to quickly unlock 100 universes. 
+//   Every 5 minutes go to main screen and try to buy the last not bought item
+//   Stop when successfully bought The Tangerine God 
+//   => go to achievement screen and press Breach the Universe
+//   => skip the cutscene, press 1000 times on a tangerine, buy a couple of
+//      structures, go to The Tangerine Exchange screen
+// TODO: If buying 5th resource, spend all the money
+// TODO: Auto switch to 50% purchase Volume at the start
+// TODO: Go to the Exchange screen from any screen at the start
+// TODO: think of advanced strategies of spending 100% resources on lowest resource
+// NOTE: Using Hinting a does not help much! :(
+//       The only usefull feature: '+' goes to '-' only when it's >= 80
+//       Anyway, it's kinda bullshit, not gonna implement anything about it
+
 
 program TangerineStockBot; 
 var 
@@ -64,6 +93,26 @@ procedure LoadBitmaps; begin
 end;  
 
 
+procedure clickAndReturn(x, y: integer);
+var w: Hwnd;
+    client: TSCARClient;
+    a, b: integer;
+begin
+  w := GetActiveWindow; // get current window in focus
+  client := GetClient;
+  GetMousePos(a, b);
+  client.update; //?
+  client.activate;
+  
+  sleep(50); // time for switching the window
+  
+  ClickMouse(x, y, mbLeft);
+  sleep(50); 
+  SetMousePos(a, b);
+  ActivateWindow(w);
+   
+end;
+
 procedure tryToTrade; 
 var i: integer;    
     x, y, a, b: integer;
@@ -80,12 +129,11 @@ begin
       // --, +30, --, +30    
       //write('Found buy at'); writeln(i);
       if FindBitmapTol(a, b, twoBmp, 272, 115 + i * 30, 285, 130 + i * 30, 50) then begin 
-        write('found 1 or 2 at '); writeln(i);
+        Write(DateToStr(Date)); write(' '); Write(TimeToStr(Time)); 
+        write(': Buying at '); writeln(i + 1);
         // -- Press 'Buy' on them
         // clickMouse at the found coordinates of "Buy"       
-        ClickMouse(x, y, mbLeft);
-        sleep(50);  
-        SetMousePos(700, 500);
+        clickAndReturn(x, y);
       end;                    
     end;    
     
@@ -98,12 +146,11 @@ begin
       // --, +30, --, +30        
       //write('Found sell at'); writeln(i);
       if FindBitmapTol(a, b, eightBmp, 252, 115 + i * 30, 266, 130 + i * 30, 50) then begin
-       write('found 8 or 9 at '); writeln(i);
+        Write(DateToStr(Date)); write(' '); Write(TimeToStr(Time)); 
+        write(': Selling at '); writeln(i + 1);
         // -- Press 'Sell' on them
         // clickMouse at the found coordinates of "Sell"                          
-        ClickMouse(x, y, mbLeft);
-        sleep(50);   
-        SetMousePos(700, 500);
+        clickAndReturn(x, y);
       end;
     end;
              
