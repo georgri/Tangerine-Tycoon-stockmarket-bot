@@ -62,7 +62,7 @@ Future improvements
 - TODO: Auto switch to 50% purchase Volume at the start
 - TODO: Go to the Exchange screen from any screen at the start
 - TODO: think of advanced strategies of spending 100% resources on lowest resource
-- NOTE: Using Hinting a does not help much! :(
+- NOTE: Using Hinting does not help much in trading! :(
   - The only usefull feature: '+' goes to '-' only when it's >= 80
-  - Anyway, it's kinda bullshit, not gonna implement anything about it
+  - Anyway, it's kinda BS, not gonna do anything about it
 
