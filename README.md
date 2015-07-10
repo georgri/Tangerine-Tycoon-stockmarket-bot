@@ -2,7 +2,7 @@
 A simple bot for automated trading in the Tangerine Tycoon stock market minigame.
 
 
-TO STOP THE BOT IN CASE OF EMERGENCY: Ctrl+Alt+S
+**TO STOP THE BOT IN CASE OF EMERGENCY: Ctrl+Alt+S** 
 
 
 General description
