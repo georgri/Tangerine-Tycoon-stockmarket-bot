@@ -7,11 +7,11 @@ TO STOP THE BOT IN CASE OF EMERGENCY: Ctrl+Alt+S
 
 General description
 ===============================
-The bot buys commodity when it goes below 30 for 50%
-of the available money and then sells it if it when it goes above 80. 
+The bot buys commodity when it goes below 30 tangerines for 50%
+of the available money and then sells it when it goes above 80. 
 The bot behaviour is not smart nor optimal. Playing manually will benefit you
 more quickly. The bot is useful when you are away for several hours and your
-computer is always on.   
+computer is always on.
 
 Requirements
 ===============================
